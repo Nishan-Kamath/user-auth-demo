@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+</head>
+<body>
+    
+    <header>
+        <h1>User Space</h1>
+        <a href="/logout">logout</a>
+    </header>
+
+    <section class="Welcome">
+        <h1>Hello, Welcome <%= user.fullname %></h1>
+        <p>You have successfully logged In!!</p>
+    </section>
+
+    <section class="profile">
+        <img src="/profile-picture" alt="profile picture">
+        <h2><%= user.fullname %></h2>
+        <p><%= user.email %></p>
+    </section>
+</body>
+</html>
