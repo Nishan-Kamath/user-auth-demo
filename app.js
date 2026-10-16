@@ -199,10 +199,17 @@ async function startServer(){
     await users.createIndex({email: 1},{unique:true});
 
     console.log("Cpnnected to mongodb atlas");
-
-    app.listen(3000,()=>{
-        console.log("running on port 3000");
-    });
+    
 }
 
-startServer();
+const ready = startServer();
+app.use(async(request, response, next) => {
+    try{
+        await ready;
+        next;
+    }catch(err){
+        next(err)
+    }
+});
+
+module.exports = app;
