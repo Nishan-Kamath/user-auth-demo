@@ -3,9 +3,11 @@ const {MongoClient, ObjectId, Binary} = require("mongodb");
 const session = require("express-session");
 const multer = require("multer");
 const bcrypt = require("bcryptjs");
+const path = require("path");
 
 const app = express();
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 app.use(express.static("public"));
 app.use(express.urlencoded({extended:true}));
 
@@ -99,7 +101,7 @@ app.post('/signup', upload.single("profilePicture"), async(request, response, ne
 
         const existing = await users.findOne({email});
         if(existing){
-            return response.render("signup",{
+            return response.render("register",{
                 error: "user already exists!!"
             });
         }
@@ -121,7 +123,7 @@ app.post('/signup', upload.single("profilePicture"), async(request, response, ne
         response.redirect('/home');
     }catch(error){
         if(error.code === 11000){
-            return response.render("signup",{
+            return response.render("register",{
                 error: "email already exists"
             })
         }
@@ -206,7 +208,7 @@ const ready = startServer();
 app.use(async(request, response, next) => {
     try{
         await ready;
-        next;
+        next();
     }catch(err){
         next(err)
     }
